@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "XMPPModel.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
+	[self setupRootViewController];
 	return YES;
 }
 
@@ -42,6 +44,20 @@
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	// Saves changes in the application's managed object context before the application terminates.
 	[self saveContext];
+}
+
+- (void)setupRootViewController {
+	UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+
+	if (![[XMPPModel sharedModel]isUserAuthenticated]) {
+		UIViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
+		self.window.rootViewController = loginVC;
+	}else {
+		UINavigationController *nav = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MainNavigation"];
+		UIViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
+		self.window.rootViewController = loginVC;
+		[loginVC presentViewController:nav animated:NO completion:nil];
+	}
 }
 
 #pragma mark - Core Data stack

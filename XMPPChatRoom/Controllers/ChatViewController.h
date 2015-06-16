@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ChatViewController.h
 //  XMPPChatRoom
 //
 //  Created by Susmita Horrow on 6/11/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ChatViewController : UIViewController
 
 @end
-

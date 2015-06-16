@@ -10,11 +10,15 @@
 		4ECEC72A1B29BF4600B3AE65 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7291B29BF4600B3AE65 /* main.m */; };
 		4ECEC72D1B29BF4600B3AE65 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC72C1B29BF4600B3AE65 /* AppDelegate.m */; };
 		4ECEC7301B29BF4600B3AE65 /* XMPPChatRoom.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC72E1B29BF4600B3AE65 /* XMPPChatRoom.xcdatamodeld */; };
-		4ECEC7331B29BF4600B3AE65 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7321B29BF4600B3AE65 /* ViewController.m */; };
 		4ECEC7361B29BF4600B3AE65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ECEC7341B29BF4600B3AE65 /* Main.storyboard */; };
 		4ECEC7381B29BF4600B3AE65 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ECEC7371B29BF4600B3AE65 /* Images.xcassets */; };
 		4ECEC73B1B29BF4600B3AE65 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ECEC7391B29BF4600B3AE65 /* LaunchScreen.xib */; };
 		4ECEC7471B29BF4600B3AE65 /* XMPPChatRoomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7461B29BF4600B3AE65 /* XMPPChatRoomTests.m */; };
+		4ECEC7551B29C1A700B3AE65 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7541B29C1A700B3AE65 /* LoginViewController.m */; };
+		4ECEC7581B29C1BA00B3AE65 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7571B29C1BA00B3AE65 /* FriendsViewController.m */; };
+		4ECEC75B1B29C1D500B3AE65 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC75A1B29C1D500B3AE65 /* ChatViewController.m */; };
+		4ECEC75E1B29C1F600B3AE65 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC75D1B29C1F600B3AE65 /* SignupViewController.m */; };
+		4ECEC7611B29C85500B3AE65 /* XMPPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7601B29C85500B3AE65 /* XMPPModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +38,22 @@
 		4ECEC72B1B29BF4600B3AE65 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4ECEC72C1B29BF4600B3AE65 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4ECEC72F1B29BF4600B3AE65 /* XMPPChatRoom.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = XMPPChatRoom.xcdatamodel; sourceTree = "<group>"; };
-		4ECEC7311B29BF4600B3AE65 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4ECEC7321B29BF4600B3AE65 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4ECEC7351B29BF4600B3AE65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4ECEC7371B29BF4600B3AE65 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4ECEC73A1B29BF4600B3AE65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		4ECEC7401B29BF4600B3AE65 /* XMPPChatRoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XMPPChatRoomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECEC7451B29BF4600B3AE65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ECEC7461B29BF4600B3AE65 /* XMPPChatRoomTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMPPChatRoomTests.m; sourceTree = "<group>"; };
+		4ECEC7531B29C1A700B3AE65 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controllers/LoginViewController.h; sourceTree = "<group>"; };
+		4ECEC7541B29C1A700B3AE65 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controllers/LoginViewController.m; sourceTree = "<group>"; };
+		4ECEC7561B29C1BA00B3AE65 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Controllers/FriendsViewController.h; sourceTree = "<group>"; };
+		4ECEC7571B29C1BA00B3AE65 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controllers/FriendsViewController.m; sourceTree = "<group>"; };
+		4ECEC7591B29C1D500B3AE65 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatViewController.h; path = Controllers/ChatViewController.h; sourceTree = "<group>"; };
+		4ECEC75A1B29C1D500B3AE65 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatViewController.m; path = Controllers/ChatViewController.m; sourceTree = "<group>"; };
+		4ECEC75C1B29C1F600B3AE65 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupViewController.h; path = Controllers/SignupViewController.h; sourceTree = "<group>"; };
+		4ECEC75D1B29C1F600B3AE65 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupViewController.m; path = Controllers/SignupViewController.m; sourceTree = "<group>"; };
+		4ECEC75F1B29C85500B3AE65 /* XMPPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPModel.h; path = Model/XMPPModel.h; sourceTree = "<group>"; };
+		4ECEC7601B29C85500B3AE65 /* XMPPModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMPPModel.m; path = Model/XMPPModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,10 +95,11 @@
 		4ECEC7261B29BF4600B3AE65 /* XMPPChatRoom */ = {
 			isa = PBXGroup;
 			children = (
+				4ECEC7521B29C06200B3AE65 /* Model */,
+				4ECEC7511B29C05C00B3AE65 /* Views */,
+				4ECEC7501B29C05300B3AE65 /* Controllers */,
 				4ECEC72B1B29BF4600B3AE65 /* AppDelegate.h */,
 				4ECEC72C1B29BF4600B3AE65 /* AppDelegate.m */,
-				4ECEC7311B29BF4600B3AE65 /* ViewController.h */,
-				4ECEC7321B29BF4600B3AE65 /* ViewController.m */,
 				4ECEC7341B29BF4600B3AE65 /* Main.storyboard */,
 				4ECEC7371B29BF4600B3AE65 /* Images.xcassets */,
 				4ECEC7391B29BF4600B3AE65 /* LaunchScreen.xib */,
@@ -120,6 +133,37 @@
 				4ECEC7451B29BF4600B3AE65 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4ECEC7501B29C05300B3AE65 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4ECEC7531B29C1A700B3AE65 /* LoginViewController.h */,
+				4ECEC7541B29C1A700B3AE65 /* LoginViewController.m */,
+				4ECEC7561B29C1BA00B3AE65 /* FriendsViewController.h */,
+				4ECEC7571B29C1BA00B3AE65 /* FriendsViewController.m */,
+				4ECEC7591B29C1D500B3AE65 /* ChatViewController.h */,
+				4ECEC75A1B29C1D500B3AE65 /* ChatViewController.m */,
+				4ECEC75C1B29C1F600B3AE65 /* SignupViewController.h */,
+				4ECEC75D1B29C1F600B3AE65 /* SignupViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4ECEC7511B29C05C00B3AE65 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		4ECEC7521B29C06200B3AE65 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4ECEC75F1B29C85500B3AE65 /* XMPPModel.h */,
+				4ECEC7601B29C85500B3AE65 /* XMPPModel.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,9 +266,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ECEC7581B29C1BA00B3AE65 /* FriendsViewController.m in Sources */,
+				4ECEC7551B29C1A700B3AE65 /* LoginViewController.m in Sources */,
+				4ECEC75B1B29C1D500B3AE65 /* ChatViewController.m in Sources */,
 				4ECEC72D1B29BF4600B3AE65 /* AppDelegate.m in Sources */,
+				4ECEC7611B29C85500B3AE65 /* XMPPModel.m in Sources */,
 				4ECEC7301B29BF4600B3AE65 /* XMPPChatRoom.xcdatamodeld in Sources */,
-				4ECEC7331B29BF4600B3AE65 /* ViewController.m in Sources */,
+				4ECEC75E1B29C1F600B3AE65 /* SignupViewController.m in Sources */,
 				4ECEC72A1B29BF4600B3AE65 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,6 +470,7 @@
 				4ECEC74C1B29BF4600B3AE65 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4ECEC74D1B29BF4600B3AE65 /* Build configuration list for PBXNativeTarget "XMPPChatRoomTests" */ = {
 			isa = XCConfigurationList;
@@ -430,6 +479,7 @@
 				4ECEC74F1B29BF4600B3AE65 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
