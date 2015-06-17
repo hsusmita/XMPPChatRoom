@@ -7,6 +7,7 @@
 //
 
 #import "FriendsViewController.h"
+#import "AppDelegate.h"
 
 @interface FriendsViewController ()
 
@@ -33,5 +34,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)didTapLogout:(id)sender {
+  AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+  [appDelegate showLoginFlow];
+}
 
 @end

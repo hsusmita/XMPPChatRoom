@@ -20,6 +20,8 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+- (void)showLoginFlow;
+- (void)showChatFlow;
 
 @end
 

@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "XMPPModel.h"
+#import "LoginViewController.h"
+#import "ContainerViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
 	[self setupRootViewController];
+
 	return YES;
 }
 
@@ -48,16 +51,24 @@
 
 - (void)setupRootViewController {
 	UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+  LoginViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
+  UINavigationController *navVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MainNavigation"];
 
-	if (![[XMPPModel sharedModel]isUserAuthenticated]) {
-		UIViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
-		self.window.rootViewController = loginVC;
-	}else {
-		UINavigationController *nav = [mainStoryBoard instantiateViewControllerWithIdentifier:@"MainNavigation"];
-		UIViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
-		self.window.rootViewController = loginVC;
-		[loginVC presentViewController:nav animated:NO completion:nil];
-	}
+  ContainerViewController *containerVC = [[ContainerViewController alloc]initWithViewControllers:@[loginVC,navVC]];
+  self.window.rootViewController = containerVC;
+  [self.window makeKeyAndVisible];
+}
+
+- (ContainerViewController *)containerViewController {
+  return (ContainerViewController *) self.window.rootViewController;
+}
+
+- (void)showChatFlow {
+  [[self containerViewController]moveToViewControllerWithIndex:1];
+}
+
+- (void)showLoginFlow {
+  [[self containerViewController]moveToViewControllerWithIndex:0];
 }
 
 #pragma mark - Core Data stack

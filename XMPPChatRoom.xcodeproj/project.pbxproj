@@ -19,6 +19,9 @@
 		4ECEC75B1B29C1D500B3AE65 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC75A1B29C1D500B3AE65 /* ChatViewController.m */; };
 		4ECEC75E1B29C1F600B3AE65 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC75D1B29C1F600B3AE65 /* SignupViewController.m */; };
 		4ECEC7611B29C85500B3AE65 /* XMPPModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ECEC7601B29C85500B3AE65 /* XMPPModel.m */; };
+		695F1B481B31560C0059E951 /* ControllerTransitionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1B471B31560C0059E951 /* ControllerTransitionContext.m */; };
+		695F1B4B1B31586B0059E951 /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1B4A1B31586B0059E951 /* TransitionAnimator.m */; };
+		695F1B4E1B3172B20059E951 /* ContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1B4D1B3172B20059E951 /* ContainerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,12 @@
 		4ECEC75D1B29C1F600B3AE65 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignupViewController.m; path = Controllers/SignupViewController.m; sourceTree = "<group>"; };
 		4ECEC75F1B29C85500B3AE65 /* XMPPModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPModel.h; path = Model/XMPPModel.h; sourceTree = "<group>"; };
 		4ECEC7601B29C85500B3AE65 /* XMPPModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMPPModel.m; path = Model/XMPPModel.m; sourceTree = "<group>"; };
+		695F1B461B31560C0059E951 /* ControllerTransitionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ControllerTransitionContext.h; path = Classes/ControllerTransitionContext.h; sourceTree = "<group>"; };
+		695F1B471B31560C0059E951 /* ControllerTransitionContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ControllerTransitionContext.m; path = Classes/ControllerTransitionContext.m; sourceTree = "<group>"; };
+		695F1B491B31586B0059E951 /* TransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionAnimator.h; path = Classes/TransitionAnimator.h; sourceTree = "<group>"; };
+		695F1B4A1B31586B0059E951 /* TransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionAnimator.m; path = Classes/TransitionAnimator.m; sourceTree = "<group>"; };
+		695F1B4C1B3172B20059E951 /* ContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContainerViewController.h; path = Classes/ContainerViewController.h; sourceTree = "<group>"; };
+		695F1B4D1B3172B20059E951 /* ContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContainerViewController.m; path = Classes/ContainerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +104,7 @@
 		4ECEC7261B29BF4600B3AE65 /* XMPPChatRoom */ = {
 			isa = PBXGroup;
 			children = (
+				695F1B451B3155E20059E951 /* Classes */,
 				4ECEC7521B29C06200B3AE65 /* Model */,
 				4ECEC7511B29C05C00B3AE65 /* Views */,
 				4ECEC7501B29C05300B3AE65 /* Controllers */,
@@ -164,6 +174,19 @@
 				4ECEC7601B29C85500B3AE65 /* XMPPModel.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		695F1B451B3155E20059E951 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				695F1B4C1B3172B20059E951 /* ContainerViewController.h */,
+				695F1B4D1B3172B20059E951 /* ContainerViewController.m */,
+				695F1B461B31560C0059E951 /* ControllerTransitionContext.h */,
+				695F1B471B31560C0059E951 /* ControllerTransitionContext.m */,
+				695F1B491B31586B0059E951 /* TransitionAnimator.h */,
+				695F1B4A1B31586B0059E951 /* TransitionAnimator.m */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,13 +290,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ECEC7581B29C1BA00B3AE65 /* FriendsViewController.m in Sources */,
+				695F1B4B1B31586B0059E951 /* TransitionAnimator.m in Sources */,
 				4ECEC7551B29C1A700B3AE65 /* LoginViewController.m in Sources */,
 				4ECEC75B1B29C1D500B3AE65 /* ChatViewController.m in Sources */,
 				4ECEC72D1B29BF4600B3AE65 /* AppDelegate.m in Sources */,
 				4ECEC7611B29C85500B3AE65 /* XMPPModel.m in Sources */,
 				4ECEC7301B29BF4600B3AE65 /* XMPPChatRoom.xcdatamodeld in Sources */,
+				695F1B4E1B3172B20059E951 /* ContainerViewController.m in Sources */,
 				4ECEC75E1B29C1F600B3AE65 /* SignupViewController.m in Sources */,
 				4ECEC72A1B29BF4600B3AE65 /* main.m in Sources */,
+				695F1B481B31560C0059E951 /* ControllerTransitionContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

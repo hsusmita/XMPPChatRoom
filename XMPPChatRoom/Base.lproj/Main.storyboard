@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Oli-WP-rKI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -16,27 +17,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YT-iV-pCI">
-                                <rect key="frame" x="253" y="28" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YT-iV-pCI">
+                                <rect key="frame" x="522" y="28" width="62" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="62" id="AFY-RY-BQY"/>
+                                    <constraint firstAttribute="height" constant="30" id="Q3f-Ut-OMh"/>
+                                </constraints>
+                                <state key="normal" title="Signup">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="didTapSignIn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cAO-eu-zKN"/>
+                                    <action selector="didTapSignUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hHl-B6-uqT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opP-1Q-MKA">
+                                <rect key="frame" x="281" y="285" width="38" height="30"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kyb-UG-o2q"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="3YT-iV-pCI" secondAttribute="trailing" id="QWu-eb-iUW"/>
+                            <constraint firstAttribute="centerX" secondItem="opP-1Q-MKA" secondAttribute="centerX" id="Qr4-BM-cOQ"/>
+                            <constraint firstAttribute="centerY" secondItem="opP-1Q-MKA" secondAttribute="centerY" id="ekd-Ck-HqU"/>
+                            <constraint firstItem="3YT-iV-pCI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="w5e-RR-N2J"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="353"/>
+            <point key="canvasLocation" x="1220" y="322"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="o1g-Lf-fmy">
             <objects>
-                <viewController id="A4h-Ap-qQz" customClass="SignupViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupVC" id="A4h-Ap-qQz" customClass="SignupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4gZ-nJ-2se"/>
                         <viewControllerLayoutGuide type="bottom" id="6jd-eN-TqE"/>
@@ -44,17 +64,28 @@
                     <view key="view" contentMode="scaleToFill" id="sCn-Um-3kp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsc-h0-UZk">
+                                <rect key="frame" x="265" y="8" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapOnCancel:" destination="A4h-Ap-qQz" eventType="touchUpInside" id="Fad-t9-0ST"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heh-2d-yQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="996"/>
+            <point key="canvasLocation" x="559" y="322"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="9ja-zZ-b7k">
             <objects>
-                <viewController id="cH3-lR-3Bd" customClass="ChatViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatVC" id="cH3-lR-3Bd" customClass="ChatViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kRt-Vu-C8t"/>
                         <viewControllerLayoutGuide type="bottom" id="coo-Gh-I8q"/>
@@ -67,12 +98,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTa-6r-GhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1022" y="1010"/>
+            <point key="canvasLocation" x="1268" y="1006"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="rq3-pr-Yki">
             <objects>
-                <viewController id="upK-K8-0O6" customClass="FriendsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FriendsVC" id="upK-K8-0O6" customClass="FriendsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="P5g-SJ-nRE"/>
                         <viewControllerLayoutGuide type="bottom" id="vZz-GZ-WXi"/>
@@ -80,13 +111,24 @@
                     <view key="view" contentMode="scaleToFill" id="Blp-jJ-M3H">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHw-FX-v9v">
+                                <rect key="frame" x="240" y="65" width="81" height="30"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapLogout:" destination="upK-K8-0O6" eventType="touchUpInside" id="oh1-UF-Fye"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="KV3-F9-68z"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EIx-Bd-6Q9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1833" y="353"/>
+            <point key="canvasLocation" x="624" y="1006"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PC8-BB-4Ic">
@@ -104,7 +146,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnZ-wa-tEv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1021" y="353"/>
+            <point key="canvasLocation" x="-69" y="1006"/>
+        </scene>
+        <!--Container View Controller-->
+        <scene sceneID="z0v-Fs-kBe">
+            <objects>
+                <viewController storyboardIdentifier="ContainerVC" automaticallyAdjustsScrollViewInsets="NO" id="nKI-Ve-ST2" customClass="ContainerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ot9-jE-BFh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kte-yX-GYF"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="MGl-Zh-doS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WsD-S0-arF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-63" y="329"/>
         </scene>
     </scenes>
 </document>

@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "AppDelegate.h"
+#import "SignupViewController.h"
 
 @interface LoginViewController ()
 
@@ -33,10 +35,14 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (IBAction)didTapSignIn:(id)sender {
-	UINavigationController *nav = [self.storyboard instantiateViewControllerWithIdentifier:@"MainNavigation"];
-	[self presentViewController:nav animated:YES completion:nil];
+- (IBAction)didTapSignUp:(id)sender {
+  SignupViewController *singupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SignupVC"];
+  [self presentViewController:singupVC animated:YES completion:nil];
+}
 
+- (IBAction)didTapLogin:(id)sender {
+  AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+  [appDelegate showChatFlow];
 }
 
 @end
