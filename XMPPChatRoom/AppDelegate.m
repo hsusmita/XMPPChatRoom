@@ -10,6 +10,9 @@
 #import "XMPPModel.h"
 #import "LoginViewController.h"
 #import "ContainerViewController.h"
+#import "DDFileLogger.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
 
 @interface AppDelegate ()
 
@@ -20,6 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
+  [self setupLogger];
 	[self setupRootViewController];
 
 	return YES;
@@ -49,6 +53,13 @@
 	[self saveContext];
 }
 
+- (void)setupLogger {
+  [DDLog addLogger:[DDASLLogger sharedInstance]];
+  [DDLog addLogger:[DDTTYLogger sharedInstance]];
+  
+  [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
+}
+
 - (void)setupRootViewController {
 	UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
   LoginViewController *loginVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginVC"];
@@ -57,6 +68,11 @@
   ContainerViewController *containerVC = [[ContainerViewController alloc]initWithViewControllers:@[loginVC,navVC]];
   self.window.rootViewController = containerVC;
   [self.window makeKeyAndVisible];
+  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
+    [self showChatFlow];
+  }else {
+    [self showLoginFlow];
+  }
 }
 
 - (ContainerViewController *)containerViewController {

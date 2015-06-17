@@ -31,11 +31,11 @@
 // 
 //#import "XMPPCoreDataStorage.h"
 //
-//#import "XMPPReconnect.h"
+#import "XMPPReconnect.h"
 //
-//#import "XMPPRoster.h"
+#import "XMPPRoster.h"
 //#import "XMPPRosterMemoryStorage.h"
-//#import "XMPPRosterCoreDataStorage.h"
+#import "XMPPRosterCoreDataStorage.h"
 //
 //#import "XMPPJabberRPCModule.h"
 //#import "XMPPIQ+JabberRPC.h"
@@ -49,8 +49,8 @@
 //#import "XMPPRoomCoreDataStorage.h"
 //#import "XMPPRoomHybridStorage.h"
 //
-//#import "XMPPvCardTempModule.h"
-//#import "XMPPvCardCoreDataStorage.h"
+#import "XMPPvCardTempModule.h"
+#import "XMPPvCardCoreDataStorage.h"
 //
 //#import "XMPPPubSub.h"
 //
@@ -63,10 +63,10 @@
 //
 //#import "XMPPTransports.h"
 //
-//#import "XMPPCapabilities.h"
-//#import "XMPPCapabilitiesCoreDataStorage.h"
+#import "XMPPCapabilities.h"
+#import "XMPPCapabilitiesCoreDataStorage.h"
 //
-//#import "XMPPvCardAvatarModule.h"
+#import "XMPPvCardAvatarModule.h"
 //
 //#import "XMPPMessage+XEP_0184.h"
 //

@@ -12,5 +12,11 @@
 
 + (id)sharedModel;
 - (BOOL)isUserAuthenticated;
+- (NSString *)currentJID;
+- (NSString *)currentPassword;
+- (void)clearUserInfo;
+
+- (void)storeJID:(NSString *)JID;
+- (void)storePassword:(NSString *)password;
 
 @end

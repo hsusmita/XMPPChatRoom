@@ -168,6 +168,7 @@
 		695F1F111B31909B0059E951 /* XMPPMessage+XEP_0308.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1EA91B31909B0059E951 /* XMPPMessage+XEP_0308.m */; };
 		695F1F121B31909B0059E951 /* XMPPMessage+XEP_0333.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1EAC1B31909B0059E951 /* XMPPMessage+XEP_0333.m */; };
 		695F1F131B31909B0059E951 /* NSXMLElement+XEP_0335.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1EAF1B31909B0059E951 /* NSXMLElement+XEP_0335.m */; };
+		695F1F161B3193A90059E951 /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1F151B3193A90059E951 /* ChatManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -508,6 +509,8 @@
 		695F1EAE1B31909B0059E951 /* NSXMLElement+XEP_0335.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSXMLElement+XEP_0335.h"; sourceTree = "<group>"; };
 		695F1EAF1B31909B0059E951 /* NSXMLElement+XEP_0335.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+XEP_0335.m"; sourceTree = "<group>"; };
 		695F1EB01B31909B0059E951 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = XMPPFramework/XMPPFramework.h; sourceTree = "<group>"; };
+		695F1F141B3193A90059E951 /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatManager.h; path = Model/ChatManager.h; sourceTree = "<group>"; };
+		695F1F151B3193A90059E951 /* ChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatManager.m; path = Model/ChatManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -623,6 +626,8 @@
 			children = (
 				4ECEC75F1B29C85500B3AE65 /* XMPPModel.h */,
 				4ECEC7601B29C85500B3AE65 /* XMPPModel.m */,
+				695F1F141B3193A90059E951 /* ChatManager.h */,
+				695F1F151B3193A90059E951 /* ChatManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1789,6 +1794,7 @@
 				695F1F111B31909B0059E951 /* XMPPMessage+XEP_0308.m in Sources */,
 				695F1C201B318E660059E951 /* NSXMLElement+XMPP.m in Sources */,
 				695F1EF31B31909B0059E951 /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
+				695F1F161B3193A90059E951 /* ChatManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

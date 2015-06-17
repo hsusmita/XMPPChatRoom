@@ -9,6 +9,8 @@
 #import "XMPPModel.h"
 
 static XMPPModel *_sharedModel = nil;
+static NSString *kXMPPmyJID = @"My JID";
+static NSString *kXMPPmyPassword = @"My Password";
 
 @implementation XMPPModel
 
@@ -21,7 +23,30 @@ static XMPPModel *_sharedModel = nil;
 }
 
 - (BOOL)isUserAuthenticated {
-	return YES;
+  return ([self currentJID] && [self currentPassword]);
+}
+
+- (NSString *)currentJID {
+  return [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+}
+
+- (NSString *)currentPassword {
+  return [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
+}
+
+- (void)storeJID:(NSString *)JID {
+  [[NSUserDefaults standardUserDefaults]setObject:JID forKey:kXMPPmyJID];
+  [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+- (void)storePassword:(NSString *)password {
+  [[NSUserDefaults standardUserDefaults]setObject:password forKey:kXMPPmyJID];
+  [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+- (void)clearUserInfo {
+  [[NSUserDefaults standardUserDefaults]removeObjectForKey:kXMPPmyJID];
+  [[NSUserDefaults standardUserDefaults]removeObjectForKey:kXMPPmyPassword];
 }
 
 @end
