@@ -30,6 +30,7 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   UIViewController* toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   UIViewController* fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+//  [self scaleFrom:fromViewController.view toView:toViewController.view forTransitionContext:transitionContext];
   [self rotateFrom:fromViewController.view toView:toViewController.view forTransitionContext:transitionContext];
 //  [self slideFrom:fromViewController.view toView:toViewController.view forTransitionContext:transitionContext];
 }
@@ -64,7 +65,31 @@
       fromView.transform = CGAffineTransformIdentity;
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
+}
 
+- (void)scaleFrom:(UIView *)fromView toView:(UIView *)toView forTransitionContext:(id<UIViewControllerContextTransitioning>)transitionContext {
+  [[transitionContext containerView] addSubview:toView];
+  toView.alpha = 0;
+  
+  //Initial state
+  if (self.direction == TransitionDirectionRight) {
+    fromView.transform = CGAffineTransformIdentity;
+  }else {
+    toView.transform =  CGAffineTransformMakeScale(0.1, 0.1);
+  }
+  [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+    if (self.direction == TransitionDirectionRight) {
+      fromView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+    }else {
+      toView.transform =  CGAffineTransformIdentity;
+    }
+
+    toView.alpha = 1;
+  } completion:^(BOOL finished) {
+    fromView.transform = CGAffineTransformIdentity;
+    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    
+  }];
 }
 
 @end
