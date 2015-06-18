@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Susmita Horrow. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface XMPPModel : NSObject
 
 + (id)sharedModel;
@@ -15,8 +13,6 @@
 - (NSString *)currentJID;
 - (NSString *)currentPassword;
 - (void)clearUserInfo;
-
-- (void)storeJID:(NSString *)JID;
-- (void)storePassword:(NSString *)password;
+- (void)storeJID:(NSString *)JID andPassword:(NSString *)password;
 
 @end

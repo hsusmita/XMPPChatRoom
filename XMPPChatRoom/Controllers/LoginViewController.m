@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "SignupViewController.h"
+#import "ChatManager.h"
+#import "XMPPModel.h"
 
 @interface LoginViewController ()
 
@@ -41,6 +43,11 @@
 }
 
 - (IBAction)didTapLogin:(id)sender {
+  [[ChatManager sharedManager] authenticateUsername:@"susmita"
+                                        andPassword:@"1234"
+                                withCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    NSLog(@"Is Authenticated = %d",success);
+  }];
   AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
   [appDelegate showChatFlow];
 }

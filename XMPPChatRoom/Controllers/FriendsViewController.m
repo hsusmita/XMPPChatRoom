@@ -8,6 +8,7 @@
 
 #import "FriendsViewController.h"
 #import "AppDelegate.h"
+#import "ChatManager.h"
 
 @interface FriendsViewController ()
 
@@ -35,6 +36,9 @@
 }
 */
 - (IBAction)didTapLogout:(id)sender {
+//  [[ChatManager sharedManager]disconnectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+//    NSLog(@"Disconnect status = %d",success);
+//  }];
   AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
   [appDelegate showLoginFlow];
 }

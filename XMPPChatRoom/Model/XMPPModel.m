@@ -34,13 +34,9 @@ static NSString *kXMPPmyPassword = @"My Password";
   return [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
 }
 
-- (void)storeJID:(NSString *)JID {
+- (void)storeJID:(NSString *)JID andPassword:(NSString *)password {
   [[NSUserDefaults standardUserDefaults]setObject:JID forKey:kXMPPmyJID];
-  [[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-- (void)storePassword:(NSString *)password {
-  [[NSUserDefaults standardUserDefaults]setObject:password forKey:kXMPPmyJID];
+  [[NSUserDefaults standardUserDefaults]setObject:password forKey:kXMPPmyPassword];
   [[NSUserDefaults standardUserDefaults]synchronize];
 }
 

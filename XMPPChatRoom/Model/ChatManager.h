@@ -6,17 +6,19 @@
 //  Copyright (c) 2015 Susmita Horrow. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "XMPPFramework.h"
+typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *error) ;
 
 @interface ChatManager : NSObject
 
 + (instancetype)sharedManager;
 
-- (void)setupStream;
 - (void)teardownStream;
 
 - (void)goOnline;
 - (void)goOffline;
+
+- (void)authenticateUsername:(NSString*)name
+                     andPassword:(NSString*)password
+             withCompletionBlock:(RequestCompletionBlock)block;
 
 @end
