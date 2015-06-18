@@ -12,15 +12,22 @@
 #import "ChatManager.h"
 #import "XMPPModel.h"
 
+static CGFloat animationDuration = 0.5;
+
 @interface LoginViewController ()
+
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerVerticalCenterConstraint;
 
 @end
 
 @implementation LoginViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+  [self registerKeyboardNotification];
+  [self addGestures];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,23 +35,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (IBAction)didTapSignUp:(id)sender {
   SignupViewController *singupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"SignupVC"];
   [self presentViewController:singupVC animated:YES completion:nil];
 }
 
 - (IBAction)didTapLogin:(id)sender {
-  [[ChatManager sharedManager] authenticateUsername:@"susmita"
-                                        andPassword:@"1234"
+  [[ChatManager sharedManager] authenticateUsername:self.usernameTextField.text
+                                        andPassword:self.passwordTextField.text
                                 withCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     NSLog(@"Is Authenticated = %d",success);
   }];
@@ -52,4 +50,44 @@
   [appDelegate showChatFlow];
 }
 
+#pragma mark - Keyboard Notification handler
+
+- (void)registerKeyboardNotification {
+  [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardDidShowNotification
+                                                    object:nil
+                                                     queue:[NSOperationQueue mainQueue]
+                                                usingBlock:^(NSNotification *note) {
+                                                  NSDictionary* info = [note userInfo];
+                                                  CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+                                                  //Shift the textfields up so that keyboard does not obscure them
+                                                  CGFloat displacement = (CGRectGetHeight(self.view.frame) - kbSize.height)/2;
+                                                  self.containerVerticalCenterConstraint.constant = displacement;
+                                                  
+                                                  [UIView animateWithDuration:animationDuration
+                                                                   animations:^{
+                                                    [self.view layoutIfNeeded];
+                                                  }];
+  }];
+  
+  [[NSNotificationCenter defaultCenter]addObserverForName:UIKeyboardDidHideNotification
+                                                   object:nil
+                                                    queue:[NSOperationQueue mainQueue]
+                                               usingBlock:^(NSNotification *note) {
+                                                 self.containerVerticalCenterConstraint.constant = 0;
+                                                 [UIView animateWithDuration:animationDuration
+                                                                  animations:^{
+                                                   [self.view layoutIfNeeded];
+                                                 }];
+  }];
+}
+
+- (void)addGestures {
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
+  [self.view addGestureRecognizer:tap];
+}
+
+- (void)hideKeyboard {
+  [self.usernameTextField resignFirstResponder];
+  [self.passwordTextField resignFirstResponder];
+}
 @end

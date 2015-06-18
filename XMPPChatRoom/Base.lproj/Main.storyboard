@@ -30,24 +30,58 @@
                                     <action selector="didTapSignUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hHl-B6-uqT"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opP-1Q-MKA">
-                                <rect key="frame" x="281" y="285" width="38" height="30"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="didTapLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kyb-UG-o2q"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sRF-B9-Dgt" userLabel="ContainerView">
+                                <rect key="frame" x="160" y="225" width="280" height="150"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sUX-ef-EMr" userLabel="Username">
+                                        <rect key="frame" x="0.0" y="10" width="280" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gbI-pL-uTS" userLabel="Password">
+                                        <rect key="frame" x="0.0" y="50" width="280" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opP-1Q-MKA">
+                                        <rect key="frame" x="121" y="100" width="38" height="30"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kyb-UG-o2q"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="sUX-ef-EMr" firstAttribute="leading" secondItem="sRF-B9-Dgt" secondAttribute="leading" id="0rt-jq-iOD"/>
+                                    <constraint firstItem="gbI-pL-uTS" firstAttribute="height" secondItem="sUX-ef-EMr" secondAttribute="height" id="44w-ab-LIN"/>
+                                    <constraint firstItem="sUX-ef-EMr" firstAttribute="top" secondItem="sRF-B9-Dgt" secondAttribute="top" constant="10" id="Blf-2u-nBN"/>
+                                    <constraint firstItem="sUX-ef-EMr" firstAttribute="bottom" secondItem="gbI-pL-uTS" secondAttribute="top" constant="-10" id="JdM-ga-XRr"/>
+                                    <constraint firstItem="sUX-ef-EMr" firstAttribute="centerX" secondItem="opP-1Q-MKA" secondAttribute="centerX" id="U0a-yS-nsm"/>
+                                    <constraint firstAttribute="width" constant="280" id="WsB-Sb-c67"/>
+                                    <constraint firstAttribute="height" constant="150" id="Zhe-Zh-aoV"/>
+                                    <constraint firstItem="sUX-ef-EMr" firstAttribute="trailing" secondItem="sRF-B9-Dgt" secondAttribute="trailing" id="c9A-jQ-nhc"/>
+                                    <constraint firstItem="opP-1Q-MKA" firstAttribute="top" secondItem="gbI-pL-uTS" secondAttribute="bottom" constant="20" id="e1G-UI-Bmp"/>
+                                    <constraint firstItem="gbI-pL-uTS" firstAttribute="width" secondItem="sUX-ef-EMr" secondAttribute="width" id="kOo-Vt-c5F"/>
+                                    <constraint firstItem="gbI-pL-uTS" firstAttribute="centerX" secondItem="sUX-ef-EMr" secondAttribute="centerX" id="yfn-GH-TBc"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="3YT-iV-pCI" secondAttribute="trailing" id="QWu-eb-iUW"/>
-                            <constraint firstAttribute="centerX" secondItem="opP-1Q-MKA" secondAttribute="centerX" id="Qr4-BM-cOQ"/>
-                            <constraint firstAttribute="centerY" secondItem="opP-1Q-MKA" secondAttribute="centerY" id="ekd-Ck-HqU"/>
+                            <constraint firstAttribute="centerY" secondItem="sRF-B9-Dgt" secondAttribute="centerY" id="sHh-ph-gr9"/>
                             <constraint firstItem="3YT-iV-pCI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="w5e-RR-N2J"/>
+                            <constraint firstAttribute="centerX" secondItem="sRF-B9-Dgt" secondAttribute="centerX" id="zTe-Dz-O0e"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="containerVerticalCenterConstraint" destination="sHh-ph-gr9" id="zx9-x2-IOq"/>
+                        <outlet property="passwordTextField" destination="gbI-pL-uTS" id="13x-5s-Hpo"/>
+                        <outlet property="usernameTextField" destination="sUX-ef-EMr" id="vr7-br-jIa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
