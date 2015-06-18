@@ -169,6 +169,8 @@
 		695F1F121B31909B0059E951 /* XMPPMessage+XEP_0333.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1EAC1B31909B0059E951 /* XMPPMessage+XEP_0333.m */; };
 		695F1F131B31909B0059E951 /* NSXMLElement+XEP_0335.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1EAF1B31909B0059E951 /* NSXMLElement+XEP_0335.m */; };
 		695F1F161B3193A90059E951 /* ChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 695F1F151B3193A90059E951 /* ChatManager.m */; };
+		69D151621B32C9F70074CBDE /* XMPPStreamHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D151611B32C9F70074CBDE /* XMPPStreamHandler.m */; };
+		69D151651B32EE0A0074CBDE /* Configuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D151641B32EE0A0074CBDE /* Configuration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -511,6 +513,11 @@
 		695F1EB01B31909B0059E951 /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPFramework.h; path = XMPPFramework/XMPPFramework.h; sourceTree = "<group>"; };
 		695F1F141B3193A90059E951 /* ChatManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatManager.h; path = Model/ChatManager.h; sourceTree = "<group>"; };
 		695F1F151B3193A90059E951 /* ChatManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatManager.m; path = Model/ChatManager.m; sourceTree = "<group>"; };
+		69D151601B32C9F70074CBDE /* XMPPStreamHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMPPStreamHandler.h; path = Model/XMPPStreamHandler.h; sourceTree = "<group>"; };
+		69D151611B32C9F70074CBDE /* XMPPStreamHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMPPStreamHandler.m; path = Model/XMPPStreamHandler.m; sourceTree = "<group>"; };
+		69D151631B32EE0A0074CBDE /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
+		69D151641B32EE0A0074CBDE /* Configuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configuration.m; sourceTree = "<group>"; };
+		69D151661B32EEFB0074CBDE /* XMPPChatRoom-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XMPPChatRoom-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,6 +585,9 @@
 			children = (
 				4ECEC7281B29BF4600B3AE65 /* Info.plist */,
 				4ECEC7291B29BF4600B3AE65 /* main.m */,
+				69D151631B32EE0A0074CBDE /* Configuration.h */,
+				69D151641B32EE0A0074CBDE /* Configuration.m */,
+				69D151661B32EEFB0074CBDE /* XMPPChatRoom-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -628,6 +638,8 @@
 				4ECEC7601B29C85500B3AE65 /* XMPPModel.m */,
 				695F1F141B3193A90059E951 /* ChatManager.h */,
 				695F1F151B3193A90059E951 /* ChatManager.m */,
+				69D151601B32C9F70074CBDE /* XMPPStreamHandler.h */,
+				69D151611B32C9F70074CBDE /* XMPPStreamHandler.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1681,6 +1693,7 @@
 				695F1ED31B31909B0059E951 /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				695F1EFB1B31909B0059E951 /* XMPPMessageArchiving.m in Sources */,
 				695F1EFE1B31909B0059E951 /* XMPPMessage+XEP_0172.m in Sources */,
+				69D151651B32EE0A0074CBDE /* Configuration.m in Sources */,
 				695F1F041B31909B0059E951 /* XMPPStreamManagementStanzas.m in Sources */,
 				695F1EF81B31909B0059E951 /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				695F1EE71B31909B0059E951 /* XMPPPubSub.m in Sources */,
@@ -1761,6 +1774,7 @@
 				695F1EE81B31909B0059E951 /* TURNSocket.m in Sources */,
 				695F1EEC1B31909B0059E951 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
 				695F1F0E1B31909B0059E951 /* XMPPMessage+XEP_0280.m in Sources */,
+				69D151621B32C9F70074CBDE /* XMPPStreamHandler.m in Sources */,
 				695F1F021B31909B0059E951 /* XMPPBlocking.m in Sources */,
 				695F1C3B1B318E660059E951 /* NSString+DDXML.m in Sources */,
 				695F1C1B1B318E660059E951 /* XMPPSCRAMSHA1Authentication.m in Sources */,
@@ -1922,6 +1936,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/XMPPChatRoom/XMPPChatRoom-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1942,6 +1958,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/XMPPChatRoom/XMPPChatRoom-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
