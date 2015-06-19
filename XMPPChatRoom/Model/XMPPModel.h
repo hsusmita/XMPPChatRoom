@@ -12,7 +12,7 @@
 - (BOOL)isUserAuthenticated;
 - (NSString *)currentJID;
 - (NSString *)currentPassword;
+- (NSString *)currentUsername;
 - (void)clearUserInfo;
-- (void)storeJID:(NSString *)JID andPassword:(NSString *)password;
-
+- (void)storeUsername:(NSString*)username andPassword:(NSString *)password;
 @end

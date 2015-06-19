@@ -9,6 +9,7 @@
 #import "FriendsViewController.h"
 #import "AppDelegate.h"
 #import "ChatManager.h"
+#import "XMPPModel.h"
 
 @interface FriendsViewController ()
 
@@ -17,8 +18,13 @@
 @implementation FriendsViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+  [super viewDidLoad];
+//  [self.navigationController setTitle:[[XMPPModel sharedModel] currentUsername]];
+  self.title = [[XMPPModel sharedModel] currentUsername];
+  [[ChatManager sharedManager] connectAndBeOnlineWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    if (success)
+      NSLog(@"User is now online");
+  }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,8 +45,11 @@
 //  [[ChatManager sharedManager]disconnectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
 //    NSLog(@"Disconnect status = %d",success);
 //  }];
-  AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-  [appDelegate showLoginFlow];
+  [[ChatManager sharedManager]logoutWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+    [appDelegate showLoginFlow];
+  }];
+
 }
 
 @end

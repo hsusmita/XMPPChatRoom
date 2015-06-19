@@ -14,7 +14,10 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 - (void)setupJID:(NSString*)JID andPassword:(NSString*)password;
 - (XMPPStream *)xmppStream;
 
+- (void)disconnectWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)connectWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)authenticateWithCompletionBlock:(RequestCompletionBlock)block;
+- (void)registerWithCompletionBlock:(RequestCompletionBlock)block;
+- (void)goOnlineWithCompletionBlock:(RequestCompletionBlock)block;
 
 @end

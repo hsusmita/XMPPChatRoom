@@ -13,12 +13,18 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 + (instancetype)sharedManager;
 
 - (void)teardownStream;
-
-- (void)goOnline;
 - (void)goOffline;
 
-- (void)authenticateUsername:(NSString*)name
-                     andPassword:(NSString*)password
+- (void)authenticateUsername:(NSString *)name
+                     andPassword:(NSString *)password
              withCompletionBlock:(RequestCompletionBlock)block;
+
+- (void)registerUsername:(NSString *)name
+             andPassword:(NSString *)password
+     withCompletionBlock:(RequestCompletionBlock)block;
+
+- (void)connectAndBeOnlineWithCompletionBlock:(RequestCompletionBlock)block;
+
+- (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock;
 
 @end

@@ -15,8 +15,11 @@
 @property (nonatomic, strong) NSString *password;
 
 @property (nonatomic,copy) RequestCompletionBlock connectionCompletionBlock;
+@property (nonatomic,copy) RequestCompletionBlock disconnectCompletionBlock;
 @property (nonatomic,copy) RequestCompletionBlock authenticationCompletionBlock;
-
+@property (nonatomic,copy) RequestCompletionBlock registerCompletionBlock;
+@property (nonatomic,copy) RequestCompletionBlock onlineCompletionBlock;
+@property (nonatomic,copy) RequestCompletionBlock offlineCompletionBlock;
 
 @end
 
@@ -54,10 +57,18 @@
   }else {
     NSError *error = nil;
     [self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
-    NSLog(@"error = %@",error);
     if (error && block) {
       block(nil,NO,error);
     }
+  }
+}
+
+- (void)disconnectWithCompletionBlock:(RequestCompletionBlock)block {
+  self.disconnectCompletionBlock = block;
+  if (self.xmppStream.isDisconnected && block) {
+    block(nil,YES,nil);
+  }else {
+    [self.xmppStream disconnect];
   }
 }
 
@@ -70,7 +81,49 @@
   }
 }
 
+- (void)registerWithCompletionBlock:(RequestCompletionBlock)block {
+  self.registerCompletionBlock = block;
+  NSError *error;
+  [self.xmppStream registerWithPassword:self.password error:&error];
+  if (error && block) {
+    block(nil,NO,error);
+  }
+}
+
+
+- (void)goOnlineWithCompletionBlock:(RequestCompletionBlock)block {
+  self.onlineCompletionBlock = block;
+  XMPPPresence *presence = [XMPPPresence presence]; // type="available" is implicit
+  
+  NSString *domain = [self.xmppStream.myJID domain];
+  
+  //Google set their presence priority to 24, so we do the same to be compatible.
+  
+  if([domain isEqualToString:@"gmail.com"]
+     || [domain isEqualToString:@"gtalk.com"]
+     || [domain isEqualToString:@"talk.google.com"])
+    {
+    NSXMLElement *priority = [NSXMLElement elementWithName:@"priority" stringValue:@"24"];
+    [presence addChild:priority];
+    }
+  [[self xmppStream] sendElement:presence];
+}
+
 #pragma mark XMPPStream Delegate
+
+- (void)xmppStreamDidRegister:(XMPPStream *)sender {
+  DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+  if (self.registerCompletionBlock) {
+    self.registerCompletionBlock(nil,YES,nil);
+  }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error {
+  DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+  if (self.registerCompletionBlock) {
+    self.registerCompletionBlock(nil,NO,nil);
+  }
+}
 
 - (void)xmppStreamWillConnect:(XMPPStream *)sender {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
@@ -136,11 +189,13 @@
   if (self.authenticationCompletionBlock) {
     self.authenticationCompletionBlock(nil,YES,nil);
   }
-//  [self goOnline];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+  if (self.authenticationCompletionBlock) {
+    self.authenticationCompletionBlock(nil,NO,nil);
+  }
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq {
@@ -184,6 +239,9 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
   DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence fromStr]);
+  if (self.onlineCompletionBlock) {
+    self.onlineCompletionBlock(nil,YES,nil);
+  }
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error {
@@ -192,10 +250,14 @@
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-  if (error) {
+  if (error) { //handle the case when this is called when connection attempt fails
     DDLogError(@"Unable to connect to server. Check xmppStream.hostName.error = %@",error);
     if (self.connectionCompletionBlock) {
       self.connectionCompletionBlock(nil,NO,error);
+    }
+  }else { //handle case when disconnect is called explicitly
+    if (self.disconnectCompletionBlock) {
+      self.disconnectCompletionBlock(nil,YES,nil);
     }
   }
 }

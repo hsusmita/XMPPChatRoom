@@ -10,6 +10,7 @@
 
 static XMPPModel *_sharedModel = nil;
 static NSString *kXMPPmyJID = @"My JID";
+static NSString *kXMPPmyUsername = @"My Username";
 static NSString *kXMPPmyPassword = @"My Password";
 
 @implementation XMPPModel
@@ -34,8 +35,14 @@ static NSString *kXMPPmyPassword = @"My Password";
   return [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
 }
 
-- (void)storeJID:(NSString *)JID andPassword:(NSString *)password {
+- (NSString *)currentUsername {
+  return [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyUsername];
+}
+
+- (void)storeUsername:(NSString*)username andPassword:(NSString *)password {
+  NSString *JID = [NSString stringWithFormat:@"%@@%@",username,kHostName];
   [[NSUserDefaults standardUserDefaults]setObject:JID forKey:kXMPPmyJID];
+  [[NSUserDefaults standardUserDefaults]setObject:username forKey:kXMPPmyUsername];
   [[NSUserDefaults standardUserDefaults]setObject:password forKey:kXMPPmyPassword];
   [[NSUserDefaults standardUserDefaults]synchronize];
 }

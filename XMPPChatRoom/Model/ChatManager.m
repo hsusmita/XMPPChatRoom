@@ -41,6 +41,10 @@ static ChatManager *chatManager = nil;
 
 - (void)initialSetup {
   self.streamHandler = [[XMPPStreamHandler alloc]initWithServerName:kHostName andPort:5222];
+  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
+    [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID]
+                     andPassword:[[XMPPModel sharedModel] currentPassword]];
+  }
   [self setupRoster];
   [self setupCapabilities];
   [self setupVCardSetup];
@@ -58,11 +62,8 @@ static ChatManager *chatManager = nil;
   if (self.streamHandler.xmppStream.isConnected) {
     [self.streamHandler authenticateWithCompletionBlock:block];
   }else {
-    
-    NSString *JID = [NSString stringWithFormat:@"%@@%@",name,kHostName];
-    [self.streamHandler setupJID:JID andPassword:password];
-    [[XMPPModel sharedModel] storeJID:JID andPassword:password];
-    
+    [[XMPPModel sharedModel] storeUsername:name andPassword:password];
+    [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID] andPassword:password];
     [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
       if (success) {
         [self.streamHandler authenticateWithCompletionBlock:block];
@@ -73,6 +74,46 @@ static ChatManager *chatManager = nil;
       }
     }];
   }
+}
+
+- (void)connectAndBeOnlineWithCompletionBlock:(RequestCompletionBlock)block {
+  [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    if (success) {
+      [self.streamHandler goOnlineWithCompletionBlock:block];
+    }else {
+      if (block)block(nil,NO,nil);
+    }
+  }];
+}
+
+- (void)registerUsername:(NSString *)name
+             andPassword:(NSString *)password
+     withCompletionBlock:(RequestCompletionBlock)block {
+  NSString *JID = [NSString stringWithFormat:@"%@@%@",name,kHostName];
+  [self.streamHandler setupJID:JID andPassword:password];
+  [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    if (success) {
+      [self.streamHandler registerWithCompletionBlock:block];
+    }else if (block){
+      block(nil,NO,error);
+    }
+  }];
+}
+
+- (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock {
+  [self.streamHandler disconnectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+    if (success) {
+      NSLog(@"Logout successful");
+      [[XMPPModel sharedModel]clearUserInfo];
+      if (completionBlock) {
+        completionBlock(nil,YES,nil);
+      }
+    }else {
+      if (completionBlock) {
+        completionBlock(nil,NO,error);
+      }
+    }
+  }];
 }
 
 // The XMPPRoster handles the xmpp protocol stuff related to the roster.
@@ -206,34 +247,6 @@ static ChatManager *chatManager = nil;
 //  
 }
 
-- (BOOL)connect {
-//  if (![self.xmppStream isDisconnected]) {
-//    return YES;
-//  }
-//  if (![[XMPPModel sharedModel]isUserAuthenticated]) {
-//    return NO;
-//  }
-  
-  //[self.xmppStream setMyJID:[XMPPJID jidWithString:[[XMPPModel sharedModel]currentJID]]];
-//  [self.xmppStream setMyJID:[XMPPJID jidWithString:@"hsusmita4@gmail.com"]];
-//  password = myPassword;
-  NSLog(@"is connected = %d",![self.xmppStream isDisconnected]);
-  NSError *error = nil;
-  if (![self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error connecting"
-                                                        message:@"See console for error details."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    
-    NSLog(@"Error connecting: %@", error);
-    
-    return NO;
-    }
-  
-  return YES;
-}
 
 - (void)disconnect {
   [self goOffline];
