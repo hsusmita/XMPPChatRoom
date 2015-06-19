@@ -44,24 +44,27 @@ static CGFloat animationDuration = 0.5;
   [[ChatManager sharedManager] authenticateUsername:self.usernameTextField.text
                                         andPassword:self.passwordTextField.text
                                 withCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
-    NSLog(@"Is Authenticated = %d",success);
+                                  NSLog(@"Is Authenticated = %d",success);
+                                  if (success){
+                                    AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+                                    [appDelegate showChatFlow];
+
+                                  }
   }];
-  AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-  [appDelegate showChatFlow];
 }
 
 #pragma mark - Keyboard Notification handler
 
 - (void)registerKeyboardNotification {
-  [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardDidShowNotification
+  [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification
                                                     object:nil
                                                      queue:[NSOperationQueue mainQueue]
                                                 usingBlock:^(NSNotification *note) {
                                                   NSDictionary* info = [note userInfo];
                                                   CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
                                                   //Shift the textfields up so that keyboard does not obscure them
-                                                  CGFloat displacement = (CGRectGetHeight(self.view.frame) - kbSize.height)/2;
-                                                  self.containerVerticalCenterConstraint.constant = displacement;
+                                                  CGFloat finalVerticalCenter = (CGRectGetHeight(self.view.frame) - kbSize.height)/2;
+                                                  self.containerVerticalCenterConstraint.constant = CGRectGetHeight(self.view.frame)/2 - finalVerticalCenter;
                                                   
                                                   [UIView animateWithDuration:animationDuration
                                                                    animations:^{
@@ -69,7 +72,7 @@ static CGFloat animationDuration = 0.5;
                                                   }];
   }];
   
-  [[NSNotificationCenter defaultCenter]addObserverForName:UIKeyboardDidHideNotification
+  [[NSNotificationCenter defaultCenter]addObserverForName:UIKeyboardWillHideNotification
                                                    object:nil
                                                     queue:[NSOperationQueue mainQueue]
                                                usingBlock:^(NSNotification *note) {
