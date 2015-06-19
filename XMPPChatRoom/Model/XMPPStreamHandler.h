@@ -10,10 +10,10 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 
 @interface XMPPStreamHandler : NSObject
 
+@property (nonatomic,strong,readonly) XMPPStream *xmppStream;
+
 - (instancetype)initWithServerName:(NSString *)name andPort:(UInt16)hostPort;
 - (void)setupJID:(NSString*)JID andPassword:(NSString*)password;
-- (XMPPStream *)xmppStream;
-
 - (void)disconnectWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)connectWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)authenticateWithCompletionBlock:(RequestCompletionBlock)block;

@@ -9,8 +9,10 @@
 #import "XMPPStreamHandler.h"
 
 @interface XMPPStreamHandler()<XMPPStreamDelegate>
+//{
+//  XMPPStream *_xmppStream;
+//}
 
-@property (nonatomic, strong) XMPPStream *xmppStream;
 @property (nonatomic, assign) BOOL customCertEvaluation;
 @property (nonatomic, strong) NSString *password;
 
@@ -42,10 +44,6 @@
 - (void)setupJID:(NSString *)JID andPassword:(NSString *)password {
   [self.xmppStream setMyJID:[XMPPJID jidWithString:JID]];
   self.password = password;
-}
-
-- (XMPPStream *)xmppStream {
-  return _xmppStream;
 }
 
 - (void)connectWithCompletionBlock:(RequestCompletionBlock)block {
@@ -242,6 +240,25 @@
   if (self.onlineCompletionBlock) {
     self.onlineCompletionBlock(nil,YES,nil);
   }
+  
+ /* NSString *presenceType = [presence type]; // online/offline
+  NSString *myUsername = [[sender myJID] user];
+  NSString *presenceFromUser = [[presence from] user];
+  
+  if (![presenceFromUser isEqualToString:myUsername]) {
+    
+    if ([presenceType isEqualToString:@"available"]) {
+      
+      [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+      
+    } else if ([presenceType isEqualToString:@"unavailable"]) {
+      
+      [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+
+    }
+    
+  }*/
+  
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error {
