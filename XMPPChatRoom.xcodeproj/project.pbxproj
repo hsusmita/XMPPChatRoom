@@ -647,12 +647,7 @@
 		695F1B451B3155E20059E951 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				695F1B4C1B3172B20059E951 /* ContainerViewController.h */,
-				695F1B4D1B3172B20059E951 /* ContainerViewController.m */,
-				695F1B461B31560C0059E951 /* ControllerTransitionContext.h */,
-				695F1B471B31560C0059E951 /* ControllerTransitionContext.m */,
-				695F1B491B31586B0059E951 /* TransitionAnimator.h */,
-				695F1B4A1B31586B0059E951 /* TransitionAnimator.m */,
+				696315181B33F659000779A1 /* Transition Handlers */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1552,6 +1547,19 @@
 				695F1EAF1B31909B0059E951 /* NSXMLElement+XEP_0335.m */,
 			);
 			path = "XEP-0335";
+			sourceTree = "<group>";
+		};
+		696315181B33F659000779A1 /* Transition Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				695F1B4C1B3172B20059E951 /* ContainerViewController.h */,
+				695F1B4D1B3172B20059E951 /* ContainerViewController.m */,
+				695F1B461B31560C0059E951 /* ControllerTransitionContext.h */,
+				695F1B471B31560C0059E951 /* ControllerTransitionContext.m */,
+				695F1B491B31586B0059E951 /* TransitionAnimator.h */,
+				695F1B4A1B31586B0059E951 /* TransitionAnimator.m */,
+			);
+			name = "Transition Handlers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
