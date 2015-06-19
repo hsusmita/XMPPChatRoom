@@ -9,22 +9,24 @@
 #import "ChatManager.h"
 #import "XMPPModel.h"
 #import "XMPPStreamHandler.h"
+#import "XMPPRosterHandler.h"
 
 static ChatManager *chatManager = nil;
 
-@interface ChatManager()<XMPPStreamDelegate>
+@interface ChatManager()
 
 @property (nonatomic, strong) XMPPReconnect *xmppReconnect;
-@property (nonatomic, strong) XMPPRoster *xmppRoster;
-@property (nonatomic, strong) XMPPRosterCoreDataStorage *xmppRosterStorage;
+
 @property (nonatomic, strong) XMPPvCardTempModule *xmppvCardTempModule;
 @property (nonatomic, strong) XMPPvCardAvatarModule *xmppvCardAvatarModule;
-@property (nonatomic, strong) XMPPCapabilities *xmppCapabilities;
 @property (nonatomic, strong) XMPPvCardCoreDataStorage *xmppvCardStorage;
+
+@property (nonatomic, strong) XMPPCapabilities *xmppCapabilities;
 @property (nonatomic, strong) XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
 @property (nonatomic, assign) BOOL isXmppConnected;
 
 @property (nonatomic,strong) XMPPStreamHandler *streamHandler;
+@property (nonatomic,strong) XMPPRosterHandler *rosterHandler;
 
 @end
 
@@ -41,16 +43,11 @@ static ChatManager *chatManager = nil;
 
 - (void)initialSetup {
   self.streamHandler = [[XMPPStreamHandler alloc]initWithServerName:kHostName andPort:5222];
-  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
-    [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID]
-                     andPassword:[[XMPPModel sharedModel] currentPassword]];
-  }
-  [self setupRoster];
+  self.rosterHandler = [[XMPPRosterHandler alloc]initWithXMPPStream:self.streamHandler.xmppStream];
+ 
   [self setupCapabilities];
   [self setupVCardSetup];
-  
   [self.xmppReconnect         activate:self.streamHandler.xmppStream];
-  [self.xmppRoster            activate:self.streamHandler.xmppStream];
   [self.xmppvCardTempModule   activate:self.streamHandler.xmppStream];
   [self.xmppvCardAvatarModule activate:self.streamHandler.xmppStream];
   [self.xmppCapabilities      activate:self.streamHandler.xmppStream];
@@ -77,6 +74,10 @@ static ChatManager *chatManager = nil;
 }
 
 - (void)connectAndBeOnlineWithCompletionBlock:(RequestCompletionBlock)block {
+  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
+    [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID]
+                     andPassword:[[XMPPModel sharedModel] currentPassword]];
+  }
   [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     if (success) {
       [self.streamHandler goOnlineWithCompletionBlock:block];
@@ -100,6 +101,10 @@ static ChatManager *chatManager = nil;
   }];
 }
 
+- (void)fetchUsers {
+  [self.rosterHandler fetchUsers];
+}
+
 - (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock {
   [self.streamHandler disconnectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     if (success) {
@@ -115,23 +120,6 @@ static ChatManager *chatManager = nil;
     }
   }];
 }
-
-// The XMPPRoster handles the xmpp protocol stuff related to the roster.
-// The storage for the roster is abstracted.
-// So you can use any storage mechanism you want.
-// You can store it all in memory, or use core data and store it on disk, or use core data with an in-memory store,
-// or setup your own using raw SQLite, or create your own storage mechanism.
-// You can do it however you like! It's your application.
-// But you do need to provide the roster with some storage facility.
-
-- (void)setupRoster {
-  self.xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] initWithInMemoryStore];
-  self.xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:self.xmppRosterStorage];
-  self.xmppRoster.autoFetchRoster = YES;
-  self.xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
-  [self.xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
-}
-
 
 // Setup capabilities
 //
@@ -172,24 +160,6 @@ static ChatManager *chatManager = nil;
   self.xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:self.xmppvCardTempModule];
 }
 
-//- (void)connectWithCompletionBlock:(RequestCompletionBlock)block {
-//  self.streamHandler.connectionCompletionBlock = block;
-//  NSError *error = nil;
-//  [self.streamHandler.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
-//  if (isAlreadyConnencted && self.connectionCompletionBlock) {
-//    self.connectionCompletionBlock(nil,YES,nil);
-//  }else if ([[XMPPModel sharedModel]isUserAuthenticated]) {
-//    NSError *error = nil;
-//    [self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
-//  }else {
-//    if (self.connectionCompletionBlock) {
-//      self.connectionCompletionBlock(nil,NO,nil);
-//    } 
-//  }
-//
-//
-//}
-
 /*- (void)teardownStream {
   [self.xmppStream removeDelegate:self];
   [self.xmppRoster removeDelegate:self];
@@ -203,48 +173,10 @@ static ChatManager *chatManager = nil;
   [self.xmppStream disconnect];
 }
 
-
-- (void)goOnline {
-  XMPPPresence *presence = [XMPPPresence presence]; // type="available" is implicit
-  
-  NSString *domain = [self.xmppStream.myJID domain];
-  
-  //Google set their presence priority to 24, so we do the same to be compatible.
-  
-  if([domain isEqualToString:@"gmail.com"]
-     || [domain isEqualToString:@"gtalk.com"]
-     || [domain isEqualToString:@"talk.google.com"])
-    {
-    NSXMLElement *priority = [NSXMLElement elementWithName:@"priority" stringValue:@"24"];
-    [presence addChild:priority];
-    }
-  
-  [[self xmppStream] sendElement:presence];
-}
-
 - (void)goOffline {
   XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
   
   [[self xmppStream] sendElement:presence];
-}
-
-- (void)connectWithCompletionBlock:(RequestCompletionBlock)block {
-  self.connectionCompletionBlock = block;
-  BOOL isAlreadyConnencted = ![self.xmppStream isDisconnected];
-  NSError *error = nil;
- [self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
-//  if (isAlreadyConnencted && self.connectionCompletionBlock) {
-//    self.connectionCompletionBlock(nil,YES,nil);
-//  }else if ([[XMPPModel sharedModel]isUserAuthenticated]) {
-//    NSError *error = nil;
-//    [self.xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
-//  }else {
-//    if (self.connectionCompletionBlock) {
-//      self.connectionCompletionBlock(nil,NO,nil);
-//    }
-//  }
-//  
-//  
 }
 
 
@@ -259,48 +191,5 @@ static ChatManager *chatManager = nil;
   [self.xmppStream disconnect];
 }
 */
-/*
-#pragma mark XMPPRosterDelegate 
 
-- (void)xmppRoster:(XMPPRoster *)sender didReceiveBuddyRequest:(XMPPPresence *)presence {
-  DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-  
-  XMPPUserCoreDataStorageObject *user = [xmppRosterStorage userForJID:[presence from]
-                                                           xmppStream:xmppStream
-                                                 managedObjectContext:[self managedObjectContext_roster]];
-  
-  NSString *displayName = [user displayName];
-  NSString *jidStrBare = [presence fromStr];
-  NSString *body = nil;
-  
-  if (![displayName isEqualToString:jidStrBare])
-    {
-    body = [NSString stringWithFormat:@"Buddy request from %@ <%@>", displayName, jidStrBare];
-    }
-  else
-    {
-    body = [NSString stringWithFormat:@"Buddy request from %@", displayName];
-    }
-  
-  
-  if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-    {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-                                                        message:body
-                                                       delegate:nil
-                                              cancelButtonTitle:@"Not implemented"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    }
-  else
-    {
-    // We are not active, so use a local notification instead
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertAction = @"Not implemented";
-    localNotification.alertBody = body;
-    
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    }
-  
-}*/
 @end

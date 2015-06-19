@@ -10,15 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 
-#import "GCDAsyncSocket.h"
-#import "XMPP.h"
-#import "XMPPLogging.h"
-#import "XMPPReconnect.h"
-#import "XMPPCapabilitiesCoreDataStorage.h"
-#import "XMPPRosterCoreDataStorage.h"
-#import "XMPPvCardAvatarModule.h"
-#import "XMPPvCardCoreDataStorage.h"
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

@@ -24,6 +24,7 @@
   [[ChatManager sharedManager] connectAndBeOnlineWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     if (success)
       NSLog(@"User is now online");
+    [[ChatManager sharedManager]fetchUsers];
   }];
 }
 

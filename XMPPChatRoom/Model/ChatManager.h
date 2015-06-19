@@ -24,7 +24,9 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
      withCompletionBlock:(RequestCompletionBlock)block;
 
 - (void)connectAndBeOnlineWithCompletionBlock:(RequestCompletionBlock)block;
+- (void)fetchUsers;
 
 - (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock;
+
 
 @end
