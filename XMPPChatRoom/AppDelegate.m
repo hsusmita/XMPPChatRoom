@@ -67,7 +67,7 @@
   ContainerViewController *containerVC = [[ContainerViewController alloc]initWithViewControllers:@[loginVC,navVC]];
   self.window.rootViewController = containerVC;
   [self.window makeKeyAndVisible];
-  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
+  if ([[XMPPModel sharedModel] isUserInfoPresent]) {
     [self showChatFlow];
   }else {
     [self showLoginFlow];

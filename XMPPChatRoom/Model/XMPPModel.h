@@ -9,7 +9,7 @@
 @interface XMPPModel : NSObject
 
 + (id)sharedModel;
-- (BOOL)isUserAuthenticated;
+- (BOOL)isUserInfoPresent;
 - (NSString *)currentJID;
 - (NSString *)currentPassword;
 - (NSString *)currentUsername;

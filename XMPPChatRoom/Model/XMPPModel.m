@@ -23,7 +23,7 @@ static NSString *kXMPPmyPassword = @"My Password";
 	return _sharedModel;
 }
 
-- (BOOL)isUserAuthenticated {
+- (BOOL)isUserInfoPresent {
   return ([self currentJID] && [self currentPassword]);
 }
 
@@ -50,6 +50,8 @@ static NSString *kXMPPmyPassword = @"My Password";
 - (void)clearUserInfo {
   [[NSUserDefaults standardUserDefaults]removeObjectForKey:kXMPPmyJID];
   [[NSUserDefaults standardUserDefaults]removeObjectForKey:kXMPPmyPassword];
+  [[NSUserDefaults standardUserDefaults]removeObjectForKey:kXMPPmyUsername];
+  [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 @end
