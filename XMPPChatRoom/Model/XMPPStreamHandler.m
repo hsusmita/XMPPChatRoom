@@ -20,8 +20,6 @@
 @property (nonatomic,copy) RequestCompletionBlock disconnectCompletionBlock;
 @property (nonatomic,copy) RequestCompletionBlock authenticationCompletionBlock;
 @property (nonatomic,copy) RequestCompletionBlock registerCompletionBlock;
-@property (nonatomic,copy) RequestCompletionBlock onlineCompletionBlock;
-@property (nonatomic,copy) RequestCompletionBlock offlineCompletionBlock;
 
 @end
 
@@ -89,23 +87,22 @@
 }
 
 
-- (void)goOnlineWithCompletionBlock:(RequestCompletionBlock)block {
-  self.onlineCompletionBlock = block;
+- (void)goOnline {
   XMPPPresence *presence = [XMPPPresence presence]; // type="available" is implicit
-  
-  NSString *domain = [self.xmppStream.myJID domain];
-  
-  //Google set their presence priority to 24, so we do the same to be compatible.
-  
-  if([domain isEqualToString:@"gmail.com"]
-     || [domain isEqualToString:@"gtalk.com"]
-     || [domain isEqualToString:@"talk.google.com"])
-    {
-    NSXMLElement *priority = [NSXMLElement elementWithName:@"priority" stringValue:@"24"];
-    [presence addChild:priority];
-    }
+  NSLog(@"presence = %@",presence.type);
   [[self xmppStream] sendElement:presence];
 }
+
+- (void)goOffline {
+  XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+  [[self xmppStream] sendElement:presence];
+}
+
+- (void)tearDown {
+  [self.xmppStream removeDelegate:self];
+  [self.xmppStream disconnect];
+}
+
 
 #pragma mark XMPPStream Delegate
 
@@ -125,7 +122,6 @@
 
 - (void)xmppStreamWillConnect:(XMPPStream *)sender {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-
 }
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket {
@@ -172,7 +168,6 @@
 
 - (void)xmppStreamDidSecure:(XMPPStream *)sender {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-  NSLog(@"Did Stream secure");
 }
 
 - (void)xmppStreamDidConnect:(XMPPStream *)sender {
@@ -202,63 +197,29 @@
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
-  /*//  DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
-   NSLog(@"Did receive message");
-   // A simple example of inbound message handling.
-   
-   if ([message isChatMessageWithBody]) {
-   XMPPUserCoreDataStorageObject *user = [self.xmppRosterStorage userForJID:[message from]
-   xmppStream:self.xmppStream
-   managedObjectContext:[self managedObjectContext_roster]];
-   
-   NSString *body = [[message elementForName:@"body"] stringValue];
-   NSString *displayName = [user displayName];
-   
-   if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-   {
-   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:displayName
-   message:body
-   delegate:nil
-   cancelButtonTitle:@"Ok"
-   otherButtonTitles:nil];
-   [alertView show];
-   }
-   else
-   {
-   // We are not active, so use a local notification instead
-   UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-   localNotification.alertAction = @"Ok";
-   localNotification.alertBody = [NSString stringWithFormat:@"From: %@\n\n%@",displayName,body];
-   
-   [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-   }
-   }*/
-}
+   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+ }
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
-  DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence fromStr]);
-  if (self.onlineCompletionBlock) {
-    self.onlineCompletionBlock(nil,YES,nil);
+  DDLogVerbose(@"%@: %@ - %@", THIS_FILE, THIS_METHOD, [presence type]);
+  if ([presence isErrorPresence]) {
+      NSLog(@"Error while present");
   }
-  
- /* NSString *presenceType = [presence type]; // online/offline
+  NSString *presenceType = [presence type];
   NSString *myUsername = [[sender myJID] user];
   NSString *presenceFromUser = [[presence from] user];
-  
+
   if (![presenceFromUser isEqualToString:myUsername]) {
     
     if ([presenceType isEqualToString:@"available"]) {
       
-      [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
+//      [_chatDelegate newBuddyOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
       
     } else if ([presenceType isEqualToString:@"unavailable"]) {
       
-      [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
-
+//      [_chatDelegate buddyWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"jerry.local"]];
     }
-    
-  }*/
-  
+  }
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error {

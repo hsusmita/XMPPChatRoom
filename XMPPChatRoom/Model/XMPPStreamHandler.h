@@ -18,6 +18,8 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 - (void)connectWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)authenticateWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)registerWithCompletionBlock:(RequestCompletionBlock)block;
-- (void)goOnlineWithCompletionBlock:(RequestCompletionBlock)block;
+- (void)goOnline;
+- (void)goOffline;
+- (void)tearDown;
 
 @end

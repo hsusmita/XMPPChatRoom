@@ -14,5 +14,7 @@
 
 - (instancetype)initWithXMPPStream:(XMPPStream *)xmppStream;
 - (void)fetchUsers;
+- (NSManagedObjectContext *)rosterManagedObjectContext;
+- (void)teardown;
 
 @end

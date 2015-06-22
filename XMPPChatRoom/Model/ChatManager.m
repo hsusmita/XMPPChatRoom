@@ -53,13 +53,23 @@ static ChatManager *chatManager = nil;
   [self.xmppCapabilities      activate:self.streamHandler.xmppStream];
 }
 
+- (void)teardownStream {
+  [self.xmppReconnect         deactivate];
+  [self.xmppvCardTempModule   deactivate];
+  [self.xmppvCardAvatarModule deactivate];
+  [self.xmppCapabilities      deactivate];
+  [self.rosterHandler teardown];
+  [self.streamHandler tearDown];
+}
+
+
 - (void)authenticateUsername:(NSString*)name
                  andPassword:(NSString*)password
          withCompletionBlock:(RequestCompletionBlock)block {
+  [[XMPPModel sharedModel] storeUsername:name andPassword:password];
   if (self.streamHandler.xmppStream.isConnected) {
     [self.streamHandler authenticateWithCompletionBlock:block];
   }else {
-    [[XMPPModel sharedModel] storeUsername:name andPassword:password];
     [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID] andPassword:password];
     [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
       if (success) {
@@ -73,18 +83,26 @@ static ChatManager *chatManager = nil;
   }
 }
 
-- (void)connectAndBeOnlineWithCompletionBlock:(RequestCompletionBlock)block {
-  if ([[XMPPModel sharedModel] isUserAuthenticated]) {
+- (void)connectAndAuthenticateWithCompletionBlock:(RequestCompletionBlock)block {
+  if ([[XMPPModel sharedModel] isUserInfoPresent]) {
     [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID]
                      andPassword:[[XMPPModel sharedModel] currentPassword]];
   }
   [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     if (success) {
-      [self.streamHandler goOnlineWithCompletionBlock:block];
+      [self.streamHandler authenticateWithCompletionBlock:block];
     }else {
-      if (block)block(nil,NO,nil);
+      if (block) block(nil,NO,error);
     }
   }];
+}
+
+- (void)goOnline {
+  [self.streamHandler goOnline];
+}
+
+- (void)goOffline {
+  [self.streamHandler goOffline];
 }
 
 - (void)registerUsername:(NSString *)name
@@ -106,6 +124,7 @@ static ChatManager *chatManager = nil;
 }
 
 - (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock {
+  [self goOffline];
   [self.streamHandler disconnectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
     if (success) {
       NSLog(@"Logout successful");
@@ -120,25 +139,6 @@ static ChatManager *chatManager = nil;
     }
   }];
 }
-
-// Setup capabilities
-//
-// The XMPPCapabilities module handles all the complex hashing of the caps protocol (XEP-0115).
-// Basically, when other clients broadcast their presence on the network
-// they include information about what capabilities their client supports (audio, video, file transfer, etc).
-// But as you can imagine, this list starts to get pretty big.
-// This is where the hashing stuff comes into play.
-// Most people running the same version of the same client are going to have the same list of capabilities.
-// So the protocol defines a standardized way to hash the list of capabilities.
-// Clients then broadcast the tiny hash instead of the big list.
-// The XMPPCapabilities protocol automatically handles figuring out what these hashes mean,
-// and also persistently storing the hashes so lookups aren't needed in the future.
-//
-// Similarly to the roster, the storage of the module is abstracted.
-// You are strongly encouraged to persist caps information across sessions.
-//
-// The XMPPCapabilitiesCoreDataStorage is an ideal solution.
-// It can also be shared amongst multiple streams to further reduce hash lookups.
 
 - (void)setupCapabilities {
   self.xmppCapabilitiesStorage = [XMPPCapabilitiesCoreDataStorage sharedInstance];
@@ -160,36 +160,19 @@ static ChatManager *chatManager = nil;
   self.xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:self.xmppvCardTempModule];
 }
 
-/*- (void)teardownStream {
-  [self.xmppStream removeDelegate:self];
-  [self.xmppRoster removeDelegate:self];
+- (NSFetchedResultsController *)friendsListFetcher {
   
-  [self.xmppReconnect         deactivate];
-  [self.xmppRoster            deactivate];
-  [self.xmppvCardTempModule   deactivate];
-  [self.xmppvCardAvatarModule deactivate];
-  [self.xmppCapabilities      deactivate];
+  NSSortDescriptor *sectionDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionNum" ascending:YES];
+  NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES];
   
-  [self.xmppStream disconnect];
-}
-
-- (void)goOffline {
-  XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
+  [fetchRequest setSortDescriptors:@[sectionDescriptor,nameDescriptor]];
+  [fetchRequest setFetchBatchSize:10];
   
-  [[self xmppStream] sendElement:presence];
+  return [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                             managedObjectContext:[self.rosterHandler rosterManagedObjectContext]
+                                               sectionNameKeyPath:@"sectionNum"
+                                                        cacheName:nil];
 }
-
-
-- (void)disconnect {
-  [self goOffline];
-  [self.xmppStream disconnect];
-}
-
-- (void)disconnectWithCompletionBlock:(RequestCompletionBlock)block {
-  self.disconnectCompletionBlock = block;
-  [self goOffline];
-  [self.xmppStream disconnect];
-}
-*/
 
 @end
