@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "ChatManager.h"
 #import "XMPPModel.h"
+#import "ChatViewController.h"
 
 @interface FriendsViewController ()<UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate>
 
@@ -86,14 +87,13 @@
   [self.friendsTableView reloadData];
 }
 
-/*
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+   ChatViewController *chatVC = (ChatViewController *)segue.destinationViewController;
+   NSInteger selectedRow = [self.friendsTableView indexPathForSelectedRow].row;
+   chatVC.currentUser = [self.friendsListFetcher.fetchedObjects objectAtIndex:selectedRow];
  }
- */
 
 @end

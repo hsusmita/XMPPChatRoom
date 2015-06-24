@@ -10,4 +10,6 @@
 
 @interface ChatViewController : UIViewController
 
+@property (nonatomic,strong) XMPPUserCoreDataStorageObject *currentUser;
+
 @end

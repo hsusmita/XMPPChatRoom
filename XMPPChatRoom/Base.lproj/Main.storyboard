@@ -188,8 +188,52 @@
                     <view key="view" contentMode="scaleToFill" id="zPd-eR-uIa">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I3f-i7-ZyU">
+                                <rect key="frame" x="0.0" y="540" width="520" height="60"/>
+                                <color key="backgroundColor" red="0.47058823529999999" green="0.77647058820000003" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="hbA-eu-RxK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cH3-lR-3Bd" id="a3E-hS-eWD"/>
+                                </connections>
+                            </textView>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTH-9C-pzA">
+                                <rect key="frame" x="520" y="540" width="80" height="60"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCp-Fw-ogR">
+                                        <rect key="frame" x="17" y="15" width="46" height="30"/>
+                                        <state key="normal" title="Button">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="HCp-Fw-ogR" secondAttribute="centerY" id="Uet-Ka-4VQ"/>
+                                    <constraint firstAttribute="width" constant="80" id="f7D-HQ-vpJ"/>
+                                    <constraint firstAttribute="centerX" secondItem="HCp-Fw-ogR" secondAttribute="centerX" id="pjR-OX-Gp3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RTH-9C-pzA" firstAttribute="leading" secondItem="I3f-i7-ZyU" secondAttribute="trailing" id="9zH-YK-VEZ"/>
+                            <constraint firstAttribute="bottom" secondItem="I3f-i7-ZyU" secondAttribute="bottom" id="IwD-Hg-c5f"/>
+                            <constraint firstItem="RTH-9C-pzA" firstAttribute="height" secondItem="I3f-i7-ZyU" secondAttribute="height" id="Jgp-EJ-nkP"/>
+                            <constraint firstItem="RTH-9C-pzA" firstAttribute="bottom" secondItem="I3f-i7-ZyU" secondAttribute="bottom" id="ZAj-lH-OWx"/>
+                            <constraint firstAttribute="trailing" secondItem="RTH-9C-pzA" secondAttribute="trailing" id="dDj-bP-d8W"/>
+                            <constraint firstItem="I3f-i7-ZyU" firstAttribute="leading" secondItem="zPd-eR-uIa" secondAttribute="leading" id="tvd-ZI-zmd"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chatTextView" destination="I3f-i7-ZyU" id="o9e-Sa-Xaf"/>
+                        <outlet property="textViewBottomConstraint" destination="IwD-Hg-c5f" id="VlI-Mr-5Q5"/>
+                        <outlet property="textViewHeightConstraint" destination="hbA-eu-RxK" id="g8O-xn-cwz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HTa-6r-GhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -216,6 +260,9 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bwo-jD-uqy" id="k0l-QP-C8E">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="cH3-lR-3Bd" kind="show" id="fRO-WU-q8u"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
