@@ -93,7 +93,7 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
    ChatViewController *chatVC = (ChatViewController *)segue.destinationViewController;
    NSInteger selectedRow = [self.friendsTableView indexPathForSelectedRow].row;
-   chatVC.currentUser = [self.friendsListFetcher.fetchedObjects objectAtIndex:selectedRow];
+   chatVC.selectedFriend = [self.friendsListFetcher.fetchedObjects objectAtIndex:selectedRow];
  }
 
 @end

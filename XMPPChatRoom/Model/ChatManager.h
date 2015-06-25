@@ -6,7 +6,9 @@
 //  Copyright (c) 2015 Susmita Horrow. All rights reserved.
 //
 
-typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *error) ;
+#import "ChatMessage.h"
+
+typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *error);
 
 @interface ChatManager : NSObject
 
@@ -26,7 +28,10 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 - (void)goOffline;
 - (void)teardownStream;
 - (void)fetchUsers;
+- (void)sendMessage:(ChatMessage *)message withCompletionBlock:(RequestCompletionBlock)completionBlock;
+- (void)handleMessageReceivedWithCompletionBlock:(void(^)(ChatMessage *message,NSError *error))completionBlock;
 - (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock;
 - (NSFetchedResultsController *)friendsListFetcher;
+- (XMPPUserCoreDataStorageObject *)userWithDisplayName:(NSString *)displayName;
 
 @end

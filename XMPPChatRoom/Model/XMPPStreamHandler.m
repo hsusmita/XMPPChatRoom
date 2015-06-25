@@ -20,6 +20,8 @@
 @property (nonatomic,copy) RequestCompletionBlock disconnectCompletionBlock;
 @property (nonatomic,copy) RequestCompletionBlock authenticationCompletionBlock;
 @property (nonatomic,copy) RequestCompletionBlock registerCompletionBlock;
+@property (nonatomic,copy) RequestCompletionBlock messageSentCompletionBlock;
+@property (nonatomic,copy) RequestCompletionBlock messageReceivedCompletionBlock;
 
 @end
 
@@ -96,6 +98,25 @@
 - (void)goOffline {
   XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
   [[self xmppStream] sendElement:presence];
+}
+
+- (void)sendMessage:(NSString *)message
+         toUsername:(NSString *)username
+withCompletionBlock:(RequestCompletionBlock)completionBlock {
+  if (message.length > 0) {
+    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+    [body setStringValue:message];
+    
+    NSXMLElement *messageElement = [NSXMLElement elementWithName:@"message"];
+    [messageElement addAttributeWithName:@"type" stringValue:@"chat"];
+    [messageElement addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@@%@",username,kHostName]];
+    [messageElement addChild:body];
+    [self.xmppStream sendElement:messageElement];
+  }
+}
+
+- (void)handleMessageReceivedEventWithBlock:(RequestCompletionBlock)completionBlock {
+  self.messageReceivedCompletionBlock = completionBlock;
 }
 
 - (void)tearDown {
@@ -198,6 +219,33 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message {
    DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+   NSLog(@"message = %@",message);
+  if ([message isErrorMessage]) {
+    self.messageReceivedCompletionBlock(nil,YES,message.errorMessage);
+
+  }else {
+    if (self.messageReceivedCompletionBlock) {
+      NSArray *messages = [NSArray arrayWithObject:message];
+      self.messageReceivedCompletionBlock(messages,YES,nil);
+    }
+  }
+  
+//      if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+//        {
+//          NSLog(@"Applications are in active state");
+//          //send the above dictionary where ever you want
+//        }
+//      else
+//        {
+//        NSLog(@"Applications are in Inactive state");
+//        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+//        localNotification.alertAction = @"Ok";
+//        localNotification.applicationIconBadgeNumber=count;
+//        localNotification.alertBody =[NSString stringWithFormat:@"From:"%@\n\n%@",from,body];
+//                                      [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+//                                      //send the above dictionary where ever you want
+//                                      }
+//                                      }
  }
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence {
@@ -228,6 +276,7 @@
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error {
   DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+  NSLog(@"hostname = %@",sender.hostName);
   if (error) { //handle the case when this is called when connection attempt fails
     DDLogError(@"Unable to connect to server. Check xmppStream.hostName.error = %@",error);
     if (self.connectionCompletionBlock) {

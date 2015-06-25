@@ -20,6 +20,10 @@ typedef  void(^RequestCompletionBlock)(NSArray *result,BOOL success, NSError *er
 - (void)registerWithCompletionBlock:(RequestCompletionBlock)block;
 - (void)goOnline;
 - (void)goOffline;
+- (void)sendMessage:(NSString *)message
+         toUsername:(NSString *)username
+withCompletionBlock:(RequestCompletionBlock)completionBlock;
+- (void)handleMessageReceivedEventWithBlock:(RequestCompletionBlock)completionBlock;
 - (void)tearDown;
 
 @end

@@ -87,14 +87,16 @@ static ChatManager *chatManager = nil;
   if ([[XMPPModel sharedModel] isUserInfoPresent]) {
     [self.streamHandler setupJID:[[XMPPModel sharedModel] currentJID]
                      andPassword:[[XMPPModel sharedModel] currentPassword]];
+    [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+      if (success) {
+        [self.streamHandler authenticateWithCompletionBlock:block];
+      }else {
+        if (block) block(nil,NO,error);
+      }
+    }];
+  }else {
+    if (block) block(nil,NO,nil);
   }
-  [self.streamHandler connectWithCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
-    if (success) {
-      [self.streamHandler authenticateWithCompletionBlock:block];
-    }else {
-      if (block) block(nil,NO,error);
-    }
-  }];
 }
 
 - (void)goOnline {
@@ -121,6 +123,13 @@ static ChatManager *chatManager = nil;
 
 - (void)fetchUsers {
   [self.rosterHandler fetchUsers];
+}
+
+- (void)sendMessage:(ChatMessage *)message withCompletionBlock:(RequestCompletionBlock)completionBlock {
+  [self.streamHandler sendMessage:message.messageBody toUsername:message.receiver.displayName
+              withCompletionBlock:^(NSArray *result, BOOL success, NSError *error) {
+  }];
+
 }
 
 - (void)logoutWithCompletionBlock:(RequestCompletionBlock)completionBlock {
@@ -173,6 +182,35 @@ static ChatManager *chatManager = nil;
                                              managedObjectContext:[self.rosterHandler rosterManagedObjectContext]
                                                sectionNameKeyPath:@"sectionNum"
                                                         cacheName:nil];
+}
+
+- (XMPPUserCoreDataStorageObject *)userWithDisplayName:(NSString *)displayName {
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPUserCoreDataStorageObject"];
+  fetchRequest.predicate = [NSPredicate predicateWithFormat:@"SELF.displayName=%@",displayName];
+  NSError *error;
+  NSArray *result = [[self.rosterHandler rosterManagedObjectContext]executeFetchRequest:fetchRequest error:&error];
+  if (error) {
+    return nil;
+  }else {
+    return result.firstObject;
+  }
+}
+
+- (void)handleMessageReceivedWithCompletionBlock:(void (^)(ChatMessage *chatMessage, NSError *error))completionBlock {
+  [self.streamHandler handleMessageReceivedEventWithBlock:^(NSArray *result, BOOL success, NSError *error) {
+    if (completionBlock && success) {
+      XMPPMessage *currentMessage = result.firstObject;
+      ChatMessage *message = [ChatMessage new];
+      NSString *senderName = [[currentMessage attributeForName:@"from"] stringValue];
+      NSRange range = [senderName rangeOfString:@"@"];
+      
+      message.sender = [self userWithDisplayName:[senderName substringToIndex:range.location]];
+      message.messageBody = [[currentMessage elementForName:@"body"] stringValue];
+      completionBlock(message,nil);
+    }else {
+      completionBlock(nil,error);
+    }
+  }];
 }
 
 @end
