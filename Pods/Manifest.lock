@@ -1,10 +1,10 @@
 PODS:
-  - GrowingTextViewHandler (1.0.2)
+  - GrowingTextViewHandler (1.0.3)
 
 DEPENDENCIES:
-  - GrowingTextViewHandler (~> 1.0.2)
+  - GrowingTextViewHandler (~> 1.0.3)
 
 SPEC CHECKSUMS:
-  GrowingTextViewHandler: e61fe0d519bde0b7f9c477f0e803767cf1b50086
+  GrowingTextViewHandler: c59aa977a61de6eb10aac23969ac20b50b29f7ab
 
 COCOAPODS: 0.37.2

@@ -19,7 +19,6 @@ static NSInteger kMaximumNumberOfLines = INT_MAX;
 @property (nonatomic, assign) CGFloat maximumHeight;
 @property (nonatomic, assign) NSInteger maximumNumberOfLines;
 @property (nonatomic, assign) NSInteger minimumNumberOfLines;
-@property (nonatomic, assign) UIEdgeInsets initialEdgeinsets;
 
 @end
 
@@ -33,7 +32,6 @@ static NSInteger kMaximumNumberOfLines = INT_MAX;
     self.heightConstraint = heightConstraint;
     self.animationDuration = kDefaultAnimationDuration;
     [self updateMinimumNumberOfLines:kMinimumNumberOfLines andMaximumNumberOfLine:kMaximumNumberOfLines];
-    self.initialEdgeinsets = textView.textContainerInset;
   }
   return self;
 }
@@ -96,8 +94,7 @@ static NSInteger kMaximumNumberOfLines = INT_MAX;
                                                       attributes:@{ NSFontAttributeName:self.growingTextView.font}
                                                          context:nil];
   CGFloat heightByBoundingRect = CGRectGetHeight(boundingRect) + self.growingTextView.font.lineHeight;
-  NSLog(@"heightByBoundingRect = %f contentSize = %f",heightByBoundingRect,self.growingTextView.contentSize.height);
-  return MAX(heightByBoundingRect,self.growingTextView.contentSize.height)+ 100;
+  return MAX(heightByBoundingRect,self.growingTextView.contentSize.height);
 }
 
 
@@ -119,6 +116,15 @@ static NSInteger kMaximumNumberOfLines = INT_MAX;
   }
    else {
     [self.growingTextView.superview layoutIfNeeded];
+  }
+}
+
+- (void)setText:(NSString *)text withAnimation:(BOOL)animated {
+  self.growingTextView.text = text;
+  if (text.length > 0) {
+    [self resizeTextViewWithAnimation:animated];
+  }else {
+    [self updateVerticalAlignmentWithHeight:self.initialHeight animated:animated];
   }
 }
 

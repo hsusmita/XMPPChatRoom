@@ -10,5 +10,5 @@
 #define COCOAPODS_POD_AVAILABLE_GrowingTextViewHandler
 #define COCOAPODS_VERSION_MAJOR_GrowingTextViewHandler 1
 #define COCOAPODS_VERSION_MINOR_GrowingTextViewHandler 0
-#define COCOAPODS_VERSION_PATCH_GrowingTextViewHandler 2
+#define COCOAPODS_VERSION_PATCH_GrowingTextViewHandler 3
 
